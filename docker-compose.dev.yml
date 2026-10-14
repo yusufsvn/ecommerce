@@ -1,0 +1,76 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:17.5-alpine
+    container_name: postgres_db
+    restart: always
+    environment:
+      POSTGRES_USER: ${DB_USER:-postgres}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-secret}
+      POSTGRES_DB: ${DB_NAME:-myappdb}
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  minio:
+    image: minio/minio:latest
+    container_name: minio_storage
+    command: server /data --console-address ":9001"
+    restart: always
+    ports:
+      - "9000:9000" 
+      - "9001:9001"
+    environment:
+      MINIO_ROOT_USER: ${MINIO_ROOT_USER:-username}
+      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD:-yourpassword}
+    volumes:
+      - minio_data:/data
+
+  backend:
+    build: ./ecommerceapi
+    container_name: go_backend
+    restart: on-failure
+    depends_on:
+      - db
+      - minio
+    ports:
+      - "7116:7116"
+    volumes:
+      - ./ecommerceapi:/app
+    environment:
+      PORT: 7116
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_USER: ${DB_USER:-postgreuser}
+      DB_PASSWORD: ${DB_PASSWORD:-yourpassword}
+      DB_NAME: ${DB_NAME:-ecommercedb}
+      DB_SSLMODE: disable
+
+      DATABASE_URL: "postgres://${DB_USER:-postgreuser}:${DB_PASSWORD:-yourpassword}@db:5432/${DB_NAME:-ecommercedb}?sslmode=disable"
+      MINIO_ENDPOINT: "minio:9000" # Containerlar arası iletişim için servis adı kullanılır
+      MINIO_ACCESS_KEY: ${MINIO_ROOT_USER}
+      MINIO_PUBLIC_URL: localhost:9000
+      MINIO_SECRET_KEY: ${MINIO_ROOT_PASSWORD}
+      MINIO_BUCKET_NAME: "go-ecommerce" 
+      MINIO_USE_SSL: "false"
+
+  frontend:
+    build: ./ecommerceclient
+    container_name: react_frontend
+    restart: on-failure
+    depends_on:
+      - backend
+    ports:
+      - "5173:5173" # DİKKAT: Vite kullanıyorsan içerisi de 5173 olmalı.
+      # Eğer Nginx (Production build) kullanıyorsan "5173:80" yapmalısın.
+    volumes:
+      # Bilgisayarındaki kodları konteynerdeki /app klasörüne bağlar
+      - ./ecommerceclient:/app
+      # Host bilgisayardaki node_modules klasörünün konteynerdekini ezmesini engeller (Kritik)
+      - /app/node_modules 
+
+volumes:
+  postgres_data:
+  minio_data: # MinIO verilerinin kaybolmaması için volume

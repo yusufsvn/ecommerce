@@ -1,0 +1,4 @@
+docker-compose.yml
+ecommerceclient/.env
+ecommerceapi/.env
+/ecommerceclient/node_modules/

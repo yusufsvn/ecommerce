@@ -1,0 +1,20 @@
+FROM golang:1.25.8-alpine
+
+WORKDIR /app
+
+# Race detector için zorunlu olan C derleyicisini (gcc) kur
+RUN apk add --no-cache build-base
+
+# Live reload aracı Air'i yükle
+RUN go install github.com/air-verse/air@v1.61.7
+
+# Bağımlılıkları kopyala
+COPY go.mod go.sum ./
+COPY .air.toml ./
+RUN go mod download
+
+# CGO'yu aktif et (race detector için zorunlu)
+ENV CGO_ENABLED=0
+
+# Sadece container başladığında çalışacak komutu veriyoruz.
+CMD ["air", "-c", ".air.toml"]

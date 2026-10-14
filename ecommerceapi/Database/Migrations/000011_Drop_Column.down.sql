@@ -1,0 +1,1 @@
+alter table productcategories add column category_enum_no int;

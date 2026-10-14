@@ -1,0 +1,13 @@
+/* index.css */
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+#root {
+  /* React uygulamasının kökünü tam ekran yapıyoruz */
+  min-height: 100vh;
+  display: grid;
+  grid-template-rows: 1fr; /* Tüm alan App bileşenine verilir */
+}
