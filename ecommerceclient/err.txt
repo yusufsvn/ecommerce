@@ -1,0 +1,12 @@
+src/components/admin/CreateProduct.tsx(3,36): error TS2307: Cannot find module '../models/ProductResponse' or its corresponding type declarations.
+src/components/admin/CreateProduct.tsx(38,21): error TS7006: Parameter 'prev' implicitly has an 'any' type.
+src/components/ProductCard.tsx(3,1): error TS6133: 'cartItem' is declared but its value is never read.
+src/components/Register.tsx(5,10): error TS1484: 'Registeruser' is a type and must be imported using a type-only import when 'verbatimModuleSyntax' is enabled.
+src/Services/orderService.tsx(1,10): error TS1484: 'CreateOrderRequest' is a type and must be imported using a type-only import when 'verbatimModuleSyntax' is enabled.
+src/Services/orderService.tsx(6,36): error TS2304: Cannot find name 'axios'.
+src/Services/orderService.tsx(6,47): error TS2304: Cannot find name 'baseUrl'.
+src/Services/productService.tsx(1,15): error TS6196: 'Image' is declared but never used.
+src/Services/productService.tsx(1,109): error TS6196: 'EditProductModel' is declared but never used.
+src/Services/userService.tsx(2,10): error TS1484: 'Registeruser' is a type and must be imported using a type-only import when 'verbatimModuleSyntax' is enabled.
+src/Services/userService.tsx(2,24): error TS1484: 'LoginAdmin' is a type and must be imported using a type-only import when 'verbatimModuleSyntax' is enabled.
+src/Services/userService.tsx(2,36): error TS1484: 'LoginUserRes' is a type and must be imported using a type-only import when 'verbatimModuleSyntax' is enabled.

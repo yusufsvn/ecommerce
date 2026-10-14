@@ -1,0 +1,10 @@
+Alter table products add column item_type varchar;
+alter table orders alter column total_amount type bigint;
+alter table productorders alter column price_at_purchase type bigint;
+alter table products rename column photos_url to thumbnail_image;
+alter table productorders add column created_at Timestamptz Not Null Default now();
+alter table productorders add column updated_at Timestamptz;
+alter table productProductcategories add column created_at Timestamptz Not Null Default now();
+alter table productProductcategories add column updated_at Timestamptz;
+alter table cartProducts add column created_at Timestamptz Not Null Default now();
+alter table cartProducts add column updated_at Timestamptz;

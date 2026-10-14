@@ -1,0 +1,2 @@
+alter table refreshtokens drop constraint refreshtokens_family_id_key;
+alter table refreshtokens drop constraint refreshtokens_user_id_key;
