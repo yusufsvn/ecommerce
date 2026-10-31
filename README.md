@@ -1,4 +1,4 @@
-> https://ecommerce.yusufsevinc.work/
+A full-stack e-commerce platform built with a Go REST API and a React + TypeScript client styled with Material UI. Product search is powered by PostgreSQL Full-Text Search and pg_trgm trigram indexing, while JSONB columns allow flexible, dynamic product attributes. Authentication is stateless via JSON Web Tokens (JWT), product images and other assets are stored in S3-compatible MinIO, and checkout is handled through the Iyzico payment gateway. All services (API, database, storage, and frontend) are orchestrated with Docker Compose and exposed via Cloudflare Tunnels.
 
 ## Tech Stack
 
